@@ -1,9 +1,32 @@
+#!/usr/bin/env python
+from google.appengine.ext.webapp import template
 import webapp2
-
-class MainHandler(webapp2.RequestHandler):
+import os
+from google.appengine.api import users
+from google.appengine.api import mail
+class GDGRequestHandler(webapp2.RequestHandler):
+	def render(self, name, **data):
+		if not data:
+			data = {}
+		path = os.path.join(os.path.dirname(__file__), 'templates/')
+		self.response.out.write(template.render(path+name+".html", data))
+class MainHandler(GDGRequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        sendEmail()
+        self.render('index',user= users.get_current_user())
+def sendEmail():
+    user = users.get_current_user()
+    message = mail.EmailMessage(sender="<jam.mura@gmail.com>",subject="Welcome to Our GDG App",to="<%s>" % user.email())
+    message.body = """
+    Dear %s:
 
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+    You have succesfully logged into the GDG Mbale appengine app 
+    go to https://developers.google.com/appengine/ to learn more about appengine
+
+    The GDG Mbale Team
+    """ % user.nickname()
+
+    message.send()
+    
+app = webapp2.WSGIApplication([('/', MainHandler)],
+                              debug=True)

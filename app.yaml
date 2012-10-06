@@ -6,11 +6,19 @@ threadsafe: yes
 
 handlers:
 - url: /favicon\.ico
-  static_files: favicon.ico
+  static_files: images/favicon.ico
   upload: favicon\.ico
+- url: /stylesheets
+  static_dir: stylesheets
+- url: /images
+  static_dir: images
+- url: /javascripts
+  static_dir: javascripts
+
 
 - url: .*
   script: main.app
+  login: required
 
 libraries:
 - name: webapp2
