@@ -22,8 +22,14 @@ def sendEmail():
 
     You have succesfully logged into the GDG Mbale appengine app 
     go to https://developers.google.com/appengine/ to learn more about appengine
+    
+    
+    the code for this app can be downloaded at https://github.com/JamesMura/GDGMbale-CodeLab/zipball/master
+    
+    if you have any questions and need help contact me on
+    https://twitter.com/murangajames
 
-    The GDG Mbale Team
+    James Muranga
     """ % user.nickname()
 
     message.send()
